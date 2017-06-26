@@ -1,0 +1,2401 @@
+
+/*
+    Extra rule for -nisse ending added 11 Dec 2009
+*/
+
+routines (
+           prelude
+           mark_regions
+           R1 R2
+           Step_1
+		   Step_3
+)
+
+externals ( stem )
+
+integers ( p1 p2 )
+
+groupings ( v ca sa)
+
+stringescapes {}
+
+/* special characters (in MS-DOS Latin I) */
+
+stringdef cx   hex '10D' // cep
+stringdef cy   hex '107' // cevap
+stringdef zx   hex '17E' // zaba
+stringdef sx   hex '161' // suma
+stringdef dx   hex '111' //djak
+
+define v 'aeiou' 
+define sa '{cx}{cy}{zx}{sx}{dx}'
+define ca 'bvgdzjklmnprstfhc' + sa
+
+
+define prelude as (
+
+    do repeat goto (
+        ca ['ije'] ca <- 'e' 
+    )
+	
+	do repeat goto (
+        ca['je'] ca <- 'e' 
+    )
+)
+
+define mark_regions as (
+
+    $p1 = limit
+    $p2 = limit
+
+    gopast v  gopast non-v setmark p1
+    gopast sa setmark p2
+
+)
+
+backwardmode (
+
+    define R1 as $p1 <= cursor
+    define R2 as $p2 == 0
+
+    define Step_1 as (
+	[substring] R1 among (
+		'lozi'	
+		'loga'			
+		'lozima' 	(<-'log')
+		'pesi'		
+		'pesima'	(<-'peh')
+		'vojci'		(<-'vojka')
+		'bojci'		(<-'bojka')
+		'jaci'		
+		'jacima'	(<-'jak')
+		'cajni'		(<-'cajan')
+		'erni'		(<-'eran')
+		'larni'		(<-'laran')
+		'esni'		(<-'esan')
+		'anjac'		(<-'anjca')
+		'ajca'		
+		'ajaca'		(<-'ajca')
+		'ljaca'		
+		'ljca'		(<-'ljac')
+		'ejca'	
+		'ejaca'		(<-'ejca')
+		'ojca'	
+		'ojaca'		(<-'ojac')
+		'ajaka'		(<-'ajka')
+		'ojaka'		(<-'ojka')
+		'{sx}aca'	
+		'{sx}ca'	(<-'{sx}ac')
+		'sca'	 (R2 <-'sac')
+		'inzima'	
+		'inzi'		(<-'ing')
+		'tvenici'	(<-'tvenik')
+		'tetici'	
+		'teticima'	(<-'tetika')
+		'nstava'	(<-'nstvo')
+		'nicima'	(<-'nik')
+		'ticima'	(<-'tik')
+		'zicima'	(<-'zik')
+		'snici'		(<-'snik')
+		'kuse'		(<-'kusi')
+		'kusin'		(<-'kusan')
+		'kustava'	(<-'kustvo')
+		'du{sx}an'	(<-'du{sx}ni')
+		'antan'		(<-'antni')
+		'bilan'		(<-'bilni')
+		'tilan'		(<-'tilni')
+		'avilan'	(<-'avilni')
+		'silan'		(<-'silni')
+		'gilan'	(<-'gilni')
+		'rilan'	(<-'rilni')
+		'nilan'	(<-'nilni')
+		'alan'	(<-'alni')
+		'ozan'	(<-'ozni')
+		'rave'	(<-'ravi')
+		'stavan'	(<-'stavni')
+		'pravan'	(<-'pravni')
+		'tivan'		(<-'tivni')
+		'sivan'		(<-'sivni')
+		'atan'		(<-'atni')
+		'enat'		(<-'enta')
+		'tetan'		(<-'tetni')
+		'pletan'	(<-'pletni')
+		'{sx}ave'	(<-'{sx}avi')
+		'save'	 (R2 <-'savi')
+		'anat'	(<-'anta')
+		'acak'	
+		'acaka'	(<-'acka')
+		'u{sx}ak'	(<-'u{sx}ka')
+		'usak'	 (R2 <-'uska')
+		'atak'	
+		'ataka'	
+		'atci'	
+		'atcima'	(<-'atka')
+		'etak'	
+		'etaka'		(<-'etka')
+		'itak'	
+		'itaka'	
+		'itci'		(<-'itka')
+		'otak'	
+		'otaka'		(<-'otka')
+		'utak'	
+		'utaka'	
+		'utci'	
+		'utcima'	(<-'utka')
+		'eskan'	 (<-'eskna')
+		'tican'	 (<-'ticni')
+		'ojska'	 (<-'ojsci')
+		'esama'	 (<-'esma')
+		'metar'
+		'metara'	(<-'metra')
+		'centar'	
+		'centara'	(<-'centra')
+		'istar'	
+		'istara'	(<-'istra')
+		'o{sx}cu'	(<-'o{sx}ti')
+		'oscu'	 (R2 <-'osti')
+		'daba'	(<-'dba')
+		'cima'	
+		'ci' (<-'cka')
+		'mac'	
+		'maca'	(<-'mca')
+		'naca'	
+		'nac'	(<-'nca')
+		'voljan'	(<-'voljni')
+		'anaka'	(<-'anki')
+		'vac'	
+		'vaca'	(<-'vca')
+		'saca'	
+		'sac'	(<-'sca')
+		'raca'	
+		'rac'	(<-'rca')
+		'aoca'	
+		'alaca'	
+		'alac'	(<-'alca')
+		'elaca'	
+		'elac'	(<-'elca')
+		'olaca'	
+		'olac'	
+		'olce'	(<-'olca')
+		'njac'	
+		'njaca'	(<-'njca')
+		'ekata'	
+		'ekat'	(<-'ekta')
+		'izam'	
+		'izama'	(<-'izma')
+		'jebe'	(<-'jebi')
+		'baci'	(<-'baci')
+		'a{sx}an'	(<-'a{sx}ni')
+		'asan'	 (R2 <-'asni')
+			        )
+	)
+	
+	define Step_3 as (
+		[substring] R1 among (
+			'skijima'
+'skijega'
+'skijemu'
+'skijem'
+'skega'
+'skemu'
+'skem'
+'skijim'
+'skijih'
+'skijoj'
+'skijeg'
+'skiji'
+'skije'
+'skija'
+'skoga'
+'skome'
+'skomu'
+'skima'
+'skog'
+'skom'
+'skim'
+'skih'
+'skoj'
+'ski'
+'ske'
+'sko'
+'ska'
+'sku'
+(<-'sk')
+'{sx}kijima'
+'{sx}kijega'
+'{sx}kijemu'
+'{sx}kijem'
+'{sx}kega'
+'{sx}kemu'
+'{sx}kem'
+'{sx}kijim'
+'{sx}kijih'
+'{sx}kijoj'
+'{sx}kijeg'
+'{sx}kiji'
+'{sx}kije'
+'{sx}kija'
+'{sx}koga'
+'{sx}kome'
+'{sx}komu'
+'{sx}kima'
+'{sx}kog'
+'{sx}kom'
+'{sx}kim'
+'{sx}kih'
+'{sx}koj'
+'{sx}ki'
+'{sx}ke'
+'{sx}ko'
+'{sx}ka'
+'{sx}ku'
+(<-'{sx}k')
+'stvima'
+'stvom'
+'stvo'
+'stva'
+'stvu'
+(<-'stv')
+'{sx}tvima'
+'{sx}tvom'
+'{sx}tvo'
+'{sx}tva'
+'{sx}tvu'
+(<-'{sx}tv')
+'tanijama'
+'tanijima'
+'tanijom'
+'tanija'
+'taniju'
+'tanije'
+'taniji'
+(<-'tanij')
+'manijama'
+'manijima'
+'manijom'
+'manija'
+'maniju'
+'manije'
+'maniji'
+(<-'manij')
+'panijama'
+'panijima'
+'panijom'
+'panija'
+'paniju'
+'panije'
+'paniji'
+(<-'panij')
+'ranijama'
+'ranijima'
+'ranijom'
+'ranija'
+'raniju'
+'ranije'
+'raniji'
+(<-'ranij')
+'ganijama'
+'ganijima'
+'ganijom'
+'ganija'
+'ganiju'
+'ganije'
+'ganiji'
+(<-'ganij')
+'aninom'
+'anina'
+'aninu'
+'anine'
+'anima'
+'anin'
+'anom'
+'anu'
+'ani'
+'ana'
+'ane'
+(<-'an')
+'inima'
+'inama'
+'inom'
+'ina'
+'ine'
+'ini'
+'inu'
+'ino'
+(<-'in')
+'onovima'
+'onova'
+'onove'
+'onovi'
+'onima'
+'onom'
+'ona'
+'one'
+'oni'
+'onu'
+(<-'on')
+'nijima'
+'nijega'
+'nijemu'
+'nijeg'
+'nijem'
+'nega'
+'nemu'
+'neg'
+'nem'
+'nijim'
+'nijih'
+'nijoj'
+'niji'
+'nije'
+'nija'
+'niju'
+'nima'
+'nome'
+'nomu'
+'noga'
+'noj'
+'nom'
+'nih'
+'nim'
+'nog'
+'no'
+'ne'
+'na'
+'nu'
+'ni'
+(<-'n')
+'a{cy}oga'
+'a{cy}ome'
+'a{cy}omu'
+'a{cy}ega'
+'a{cy}emu'
+'a{cy}ima'
+'a{cy}oj'
+'a{cy}ih'
+'a{cy}om'
+'a{cy}eg'
+'a{cy}em'
+'a{cy}og'
+'a{cy}uh'
+'a{cy}im'
+'a{cy}e'
+'a{cy}a'
+(<-'a{cy}')
+'e{cy}oga'
+'e{cy}ome'
+'e{cy}omu'
+'e{cy}ega'
+'e{cy}emu'
+'e{cy}ima'
+'e{cy}oj'
+'e{cy}ih'
+'e{cy}om'
+'e{cy}eg'
+'e{cy}em'
+'e{cy}og'
+'e{cy}uh'
+'e{cy}im'
+'e{cy}e'
+'e{cy}a'
+(<-'e{cy}')
+'u{cy}oga'
+'u{cy}ome'
+'u{cy}omu'
+'u{cy}ega'
+'u{cy}emu'
+'u{cy}ima'
+'u{cy}oj'
+'u{cy}ih'
+'u{cy}om'
+'u{cy}eg'
+'u{cy}em'
+'u{cy}og'
+'u{cy}uh'
+'u{cy}im'
+'u{cy}e'
+'u{cy}a'
+(<-'u{cy}')
+'ugovima'
+'ugovi'
+'ugove'
+'ugova'
+(<-'ugov')
+'ugama'
+'ugom'
+'uga'
+'uge'
+'ugi'
+'ugu'
+'ugo'
+(<-'ug')
+'logama'
+'logom'
+'loga'
+'logu'
+'loge'
+(<-'log')
+'govima'
+'gama'
+'govi'
+'gove'
+'gova'
+'gom'
+'ga'
+'ge'
+'gi'
+'gu'
+'go'
+(<-'g')
+'rarijem'
+'rarija'
+'rariju'
+'rario'
+(<-'rari')
+'otijem'
+'otija'
+'otiju'
+'otio'
+(<-'oti')
+'sijem'
+'sija'
+'siju'
+'sio'
+(<-'si')
+'lijem'
+'lija'
+'liju'
+'lio'
+(<-'li')
+'uju{cy}i'
+'ujemo'
+'ujete'
+'ujmo'
+'ujem'
+'uje{sx}'
+'uje'
+'uju'
+(<-'uj')
+'cajevima'
+'cajevi'
+'cajeva'
+'cajeve'
+'cajama'
+'cajima'
+'cajem'
+'caja'
+'caje'
+'caji'
+'caju'
+(<-'caj')
+'{cx}ajevima'
+'{cx}ajevi'
+'{cx}ajeva'
+'{cx}ajeve'
+'{cx}ajama'
+'{cx}ajima'
+'{cx}ajem'
+'{cx}aja'
+'{cx}aje'
+'{cx}aji'
+'{cx}aju'
+(<-'{cx}aj')
+'{cy}ajevima'
+'{cy}ajevi'
+'{cy}ajeva'
+'{cy}ajeve'
+'{cy}ajama'
+'{cy}ajima'
+'{cy}ajem'
+'{cy}aja'
+'{cy}aje'
+'{cy}aji'
+'{cy}aju'
+(<-'{cy}aj')
+'{dx}ajevima'
+'{dx}ajevi'
+'{dx}ajeva'
+'{dx}ajeve'
+'{dx}ajama'
+'{dx}ajima'
+'{dx}ajem'
+'{dx}aja'
+'{dx}aje'
+'{dx}aji'
+'{dx}aju'
+(<-'{dx}aj')
+'lajevima'
+'lajevi'
+'lajeva'
+'lajeve'
+'lajama'
+'lajima'
+'lajem'
+'laja'
+'laje'
+'laji'
+'laju'
+(<-'laj')
+'rajevima'
+'rajevi'
+'rajeva'
+'rajeve'
+'rajama'
+'rajima'
+'rajem'
+'raja'
+'raje'
+'raji'
+'raju'
+(<-'raj')
+'bijima'
+'bijama'
+'bijom'
+'bija'
+'bije'
+'biji'
+'biju'
+'bijo'
+(<-'bij')
+'cijima'
+'cijama'
+'cijom'
+'cija'
+'cije'
+'ciji'
+'ciju'
+'cijo'
+(<-'cij')
+'dijima'
+'dijama'
+'dijom'
+'dija'
+'dije'
+'diji'
+'diju'
+'dijo'
+(<-'dij')
+'lijima'
+'lijama'
+'lijom'
+'lije'
+'liji'
+'lijo'
+(<-'lij')
+'nijama'
+'nijom'
+'nijo'
+(<-'nij')
+'mijima'
+'mijama'
+'mijom'
+'mija'
+'mije'
+'miji'
+'miju'
+'mijo'
+(<-'mij')
+'{zx}ijima'
+'{zx}ijama'
+'{zx}ijom'
+'{zx}ija'
+'{zx}ije'
+'{zx}iji'
+'{zx}iju'
+'{zx}ijo'
+(<-'{zx}ij')
+'gijima'
+'gijama'
+'gijom'
+'gija'
+'gije'
+'giji'
+'giju'
+'gijo'
+(<-'gij')
+'fijima'
+'fijama'
+'fijom'
+'fija'
+'fije'
+'fiji'
+'fiju'
+'fijo'
+(<-'fij')
+'pijima'
+'pijama'
+'pijom'
+'pija'
+'pije'
+'piji'
+'piju'
+'pijo'
+(<-'pij')
+'rijima'
+'rijama'
+'rijom'
+'rija'
+'rije'
+'riji'
+'riju'
+'rijo'
+(<-'rij')
+'sijima'
+'sijama'
+'sijom'
+'sije'
+'siji'
+'sijo'
+(<-'sij')
+'tijima'
+'tijama'
+'tijom'
+'tija'
+'tije'
+'tiji'
+'tiju'
+'tijo'
+(<-'tij')
+'zijima'
+'zijama'
+'zijom'
+'zija'
+'zije'
+'ziji'
+'ziju'
+'zijo'
+(<-'zij')
+'nalima'
+'nalama'
+'nalom'
+'nala'
+'nale'
+'nali'
+'nalu'
+'nalo'
+(<-'nal')
+'ijalima'
+'ijalama'
+'ijalom'
+'ijala'
+'ijale'
+'ijali'
+'ijalu'
+'ijalo'
+(<-'ijal')
+'ozilima'
+'ozilom'
+'ozila'
+'ozile'
+'ozilu'
+'ozili'
+(<-'ozil')
+'olovima'
+'olovi'
+'olova'
+'olove'
+(<-'olov')
+'olima'
+'olom'
+'ola'
+'olu'
+'ole'
+'oli'
+(<-'ol')
+'lemama'
+'lemima'
+'lemom'
+'lema'
+'leme'
+'lemi'
+'lemu'
+'lemo'
+(<-'lem')
+'ramama'
+'ramom'
+'rama'
+'rame'
+'rami'
+'ramu'
+'ramo'
+(<-'ram')
+'arama'
+'arima'
+'arom'
+'aru'
+'ara'
+'are'
+'ari'
+(<-'ar')
+'drama'
+'drima'
+'drom'
+'dru'
+'dra'
+'dre'
+'dri'
+(<-'dr')
+'erama'
+'erima'
+'erom'
+'eru'
+'era'
+'ere'
+'eri'
+(<-'er')
+'orama'
+'orima'
+'orom'
+'oru'
+'ora'
+'ore'
+'ori'
+(<-'or')
+'esima'
+'esom'
+'ese'
+'esa'
+'esu'
+(<-'es')
+'isima'
+'isom'
+'ise'
+'isa'
+'isu'
+(<-'is')
+'ta{sx}ama'
+'ta{sx}ima'
+'ta{sx}om'
+'ta{sx}em'
+'ta{sx}a'
+'ta{sx}u'
+'ta{sx}i'
+'ta{sx}e'
+(<-'ta{sx}')
+'na{sx}ama'
+'na{sx}ima'
+'na{sx}om'
+'na{sx}em'
+'na{sx}a'
+'na{sx}u'
+'na{sx}i'
+'na{sx}e'
+(<-'na{sx}')
+'ja{sx}ama'
+'ja{sx}ima'
+'ja{sx}om'
+'ja{sx}em'
+'ja{sx}a'
+'ja{sx}u'
+'ja{sx}i'
+'ja{sx}e'
+(<-'ja{sx}')
+'ka{sx}ama'
+'ka{sx}ima'
+'ka{sx}om'
+'ka{sx}em'
+'ka{sx}a'
+'ka{sx}u'
+'ka{sx}i'
+'ka{sx}e'
+(<-'ka{sx}')
+'ba{sx}ama'
+'ba{sx}ima'
+'ba{sx}om'
+'ba{sx}em'
+'ba{sx}a'
+'ba{sx}u'
+'ba{sx}i'
+'ba{sx}e'
+(<-'ba{sx}')
+'ga{sx}ama'
+'ga{sx}ima'
+'ga{sx}om'
+'ga{sx}em'
+'ga{sx}a'
+'ga{sx}u'
+'ga{sx}i'
+'ga{sx}e'
+(<-'ga{sx}')
+'va{sx}ama'
+'va{sx}ima'
+'va{sx}om'
+'va{sx}em'
+'va{sx}a'
+'va{sx}u'
+'va{sx}i'
+'va{sx}e'
+(<-'va{sx}')
+'e{sx}ima'
+'e{sx}ama'
+'e{sx}om'
+'e{sx}em'
+'e{sx}i'
+'e{sx}e'
+'e{sx}a'
+'e{sx}u'
+(<-'e{sx}')
+'i{sx}ima'
+'i{sx}ama'
+'i{sx}om'
+'i{sx}em'
+'i{sx}i'
+'i{sx}e'
+'i{sx}a'
+'i{sx}u'
+(<-'i{sx}')
+'ikatima'
+'ikatom'
+'ikata'
+'ikate'
+'ikati'
+'ikatu'
+'ikato'
+(<-'ikat')
+'latima'
+'latom'
+'lata'
+'late'
+'lati'
+'latu'
+'lato'
+(<-'lat')
+'etama'
+'etima'
+'etom'
+'eta'
+'ete'
+'eti'
+'etu'
+'eto'
+(<-'et')
+'estima'
+'estama'
+'estom'
+'esta'
+'este'
+'esti'
+'estu'
+'esto'
+(<-'est')
+'istima'
+'istama'
+'istom'
+'ista'
+'iste'
+'isti'
+'istu'
+'isto'
+(<-'ist')
+'kstima'
+'kstama'
+'kstom'
+'ksta'
+'kste'
+'ksti'
+'kstu'
+'ksto'
+(<-'kst')
+'ostima'
+'ostama'
+'ostom'
+'osta'
+'oste'
+'osti'
+'ostu'
+'osto'
+(<-'ost')
+'i{sx}tima'
+'i{sx}tem'
+'i{sx}ta'
+'i{sx}te'
+'i{sx}tu'
+(<-'i{sx}t')
+'ovasmo'
+'ovaste'
+'ovahu'
+'ovati'
+'ova{sx}e'
+'ovali'
+'ovala'
+'ovale'
+'ovalo'
+'ovat'
+'ovah'
+'ovao'
+(<-'ova')
+'avijemu'
+'avijima'
+'avijega'
+'avijeg'
+'avijem'
+'avemu'
+'avega'
+'aveg'
+'avem'
+'avijim'
+'avijih'
+'avijoj'
+'avoga'
+'avome'
+'avomu'
+'avima'
+'avama'
+'aviji'
+'avije'
+'avija'
+'aviju'
+'avim'
+'avih'
+'avoj'
+'avom'
+'avog'
+'avi'
+'ava'
+'avu'
+'ave'
+'avo'
+(<-'av')
+'evijemu'
+'evijima'
+'evijega'
+'evijeg'
+'evijem'
+'evemu'
+'evega'
+'eveg'
+'evem'
+'evijim'
+'evijih'
+'evijoj'
+'evoga'
+'evome'
+'evomu'
+'evima'
+'evama'
+'eviji'
+'evije'
+'evija'
+'eviju'
+'evim'
+'evih'
+'evoj'
+'evom'
+'evog'
+'evi'
+'eva'
+'evu'
+'eve'
+'evo'
+(<-'ev')
+'ivijemu'
+'ivijima'
+'ivijega'
+'ivijeg'
+'ivijem'
+'ivemu'
+'ivega'
+'iveg'
+'ivem'
+'ivijim'
+'ivijih'
+'ivijoj'
+'ivoga'
+'ivome'
+'ivomu'
+'ivima'
+'ivama'
+'iviji'
+'ivije'
+'ivija'
+'iviju'
+'ivim'
+'ivih'
+'ivoj'
+'ivom'
+'ivog'
+'ivi'
+'iva'
+'ivu'
+'ive'
+'ivo'
+(<-'iv')
+'ovijemu'
+'ovijima'
+'ovijega'
+'ovijeg'
+'ovijem'
+'ovemu'
+'ovega'
+'oveg'
+'ovijim'
+'ovijih'
+'ovijoj'
+'ovoga'
+'ovome'
+'ovomu'
+'ovima'
+'oviji'
+'ovije'
+'ovija'
+'oviju'
+'ovim'
+'ovih'
+'ovoj'
+'ovom'
+'ovog'
+'ovi'
+'ova'
+'ovu'
+'ove'
+'ovo'
+(<-'ov')
+'movima'
+'movom'
+'mova'
+'movu'
+'move'
+'movi'
+(<-'mov')
+'lovima'
+'lovom'
+'lova'
+'lovu'
+'love'
+'lovi'
+(<-'lov')
+'elijemu'
+'elijima'
+'elijega'
+'elijeg'
+'elijem'
+'elemu'
+'elega'
+'eleg'
+'elem'
+'elijim'
+'elijih'
+'elijoj'
+'eloga'
+'elome'
+'elomu'
+'elima'
+'eliji'
+'elije'
+'elija'
+'eliju'
+'elim'
+'elih'
+'eloj'
+'elom'
+'elog'
+'eli'
+'ela'
+'elu'
+'ele'
+'elo'
+(<-'el')
+'anjijemu'
+'anjijima'
+'anjijega'
+'anjijeg'
+'anjijem'
+'anjemu'
+'anjega'
+'anjeg'
+'anjem'
+'anjijim'
+'anjijih'
+'anjijoj'
+'anjoga'
+'anjome'
+'anjomu'
+'anjima'
+'anjiji'
+'anjije'
+'anjija'
+'anjiju'
+'anjim'
+'anjih'
+'anjoj'
+'anjom'
+'anjog'
+'anja'
+'anje'
+'anji'
+'anjo'
+'anju'
+(<-'anj')
+'enjijemu'
+'enjijima'
+'enjijega'
+'enjijeg'
+'enjijem'
+'enjemu'
+'enjega'
+'enjeg'
+'enjem'
+'enjijim'
+'enjijih'
+'enjijoj'
+'enjoga'
+'enjome'
+'enjomu'
+'enjima'
+'enjiji'
+'enjije'
+'enjija'
+'enjiju'
+'enjim'
+'enjih'
+'enjoj'
+'enjom'
+'enjog'
+'enja'
+'enje'
+'enji'
+'enjo'
+'enju'
+(<-'enj')
+'{sx}njijemu'
+'{sx}njijima'
+'{sx}njijega'
+'{sx}njijeg'
+'{sx}njijem'
+'{sx}njemu'
+'{sx}njega'
+'{sx}njeg'
+'{sx}njem'
+'{sx}njijim'
+'{sx}njijih'
+'{sx}njijoj'
+'{sx}njoga'
+'{sx}njome'
+'{sx}njomu'
+'{sx}njima'
+'{sx}njiji'
+'{sx}njije'
+'{sx}njija'
+'{sx}njiju'
+'{sx}njim'
+'{sx}njih'
+'{sx}njoj'
+'{sx}njom'
+'{sx}njog'
+'{sx}nja'
+'{sx}nje'
+'{sx}nji'
+'{sx}njo'
+'{sx}nju'
+(<-'{sx}nj')
+'anemu'
+'anega'
+'aneg'
+'anem'
+(<-'an')
+'enemu'
+'enega'
+'eneg'
+'enem'
+(<-'en')
+'{sx}nemu'
+'{sx}nega'
+'{sx}neg'
+'{sx}nem'
+(<-'{sx}n')
+'{cx}inama'
+'{cx}inome'
+'{cx}inomu'
+'{cx}inoga'
+'{cx}inima'
+'{cx}inog'
+'{cx}inom'
+'{cx}inim'
+'{cx}inih'
+'{cx}inoj'
+'{cx}ina'
+'{cx}inu'
+'{cx}ini'
+'{cx}ino'
+'{cx}ine'
+(<-'{cx}in')
+'ro{sx}iv{sx}i'
+'ro{sx}ismo'
+'ro{sx}iste'
+'ro{sx}i{sx}e'
+'ro{sx}imo'
+'ro{sx}ite'
+'ro{sx}iti'
+'ro{sx}ili'
+'ro{sx}ila'
+'ro{sx}ilo'
+'ro{sx}ile'
+'ro{sx}im'
+'ro{sx}i{sx}'
+'ro{sx}it'
+'ro{sx}ih'
+'ro{sx}io'
+(<-'ro{sx}i')
+'o{sx}ijemu'
+'o{sx}ijima'
+'o{sx}ijega'
+'o{sx}ijeg'
+'o{sx}ijem'
+'o{sx}emu'
+'o{sx}ega'
+'o{sx}eg'
+'o{sx}em'
+'o{sx}ijim'
+'o{sx}ijih'
+'o{sx}ijoj'
+'o{sx}oga'
+'o{sx}ome'
+'o{sx}omu'
+'o{sx}ima'
+'o{sx}iji'
+'o{sx}ije'
+'o{sx}ija'
+'o{sx}iju'
+'o{sx}im'
+'o{sx}ih'
+'o{sx}oj'
+'o{sx}om'
+'o{sx}og'
+'o{sx}i'
+'o{sx}a'
+'o{sx}u'
+'o{sx}e'
+(<-'o{sx}')
+'evitijima'
+'evitijega'
+'evitijemu'
+'evitijem'
+'evitega'
+'evitemu'
+'evitem'
+'evitijim'
+'evitijih'
+'evitijoj'
+'evitijeg'
+'evitiji'
+'evitije'
+'evitija'
+'evitoga'
+'evitome'
+'evitomu'
+'evitima'
+'evitog'
+'evitom'
+'evitim'
+'evitih'
+'evitoj'
+'eviti'
+'evite'
+'evito'
+'evita'
+'evitu'
+(<-'evit')
+'ovitijima'
+'ovitijega'
+'ovitijemu'
+'ovitijem'
+'ovitega'
+'ovitemu'
+'ovitem'
+'ovitijim'
+'ovitijih'
+'ovitijoj'
+'ovitijeg'
+'ovitiji'
+'ovitije'
+'ovitija'
+'ovitoga'
+'ovitome'
+'ovitomu'
+'ovitima'
+'ovitog'
+'ovitom'
+'ovitim'
+'ovitih'
+'ovitoj'
+'oviti'
+'ovite'
+'ovito'
+'ovita'
+'ovitu'
+(<-'ovit')
+'astijima'
+'astijega'
+'astijemu'
+'astijem'
+'astega'
+'astemu'
+'astem'
+'astijim'
+'astijih'
+'astijoj'
+'astijeg'
+'astiji'
+'astije'
+'astija'
+'astoga'
+'astome'
+'astomu'
+'astima'
+'astog'
+'astom'
+'astim'
+'astih'
+'astoj'
+'asti'
+'aste'
+'asto'
+'asta'
+'astu'
+(<-'ast')
+'kijemu'
+'kijima'
+'kijega'
+'kijeg'
+'kijem'
+'kemu'
+'kega'
+'keg'
+'kem'
+'kijim'
+'kijih'
+'kijoj'
+'koga'
+'kome'
+'komu'
+'kima'
+'kiji'
+'kije'
+'kija'
+'kiju'
+'kim'
+'kih'
+'koj'
+'kom'
+'kog'
+'ki'
+'ka'
+'ku'
+'ke'
+'ko'
+(<-'k')
+'evaju{cy}i'
+'evasmo'
+'evaste'
+'evajmo'
+'evajte'
+'evaju'
+'evala'
+'evale'
+'evali'
+'evalo'
+'evamo'
+'evana'
+'evane'
+'evani'
+'evano'
+'evate'
+'evati'
+'eva{sx}e'
+'evahu'
+'evah'
+'evaj'
+'evam'
+'evan'
+'evao'
+'evat'
+'evav'
+'eva{sx}'
+(<-'eva')
+'avaju{cy}i'
+'avasmo'
+'avaste'
+'avajmo'
+'avajte'
+'avaju'
+'avala'
+'avale'
+'avali'
+'avalo'
+'avamo'
+'avana'
+'avane'
+'avani'
+'avano'
+'avate'
+'avati'
+'ava{sx}e'
+'avahu'
+'avah'
+'avaj'
+'avam'
+'avan'
+'avao'
+'avat'
+'avav'
+'ava{sx}'
+(<-'ava')
+'ivaju{cy}i'
+'ivasmo'
+'ivaste'
+'ivajmo'
+'ivajte'
+'ivaju'
+'ivala'
+'ivale'
+'ivali'
+'ivalo'
+'ivamo'
+'ivana'
+'ivane'
+'ivani'
+'ivano'
+'ivate'
+'ivati'
+'iva{sx}e'
+'ivahu'
+'ivah'
+'ivaj'
+'ivam'
+'ivan'
+'ivao'
+'ivat'
+'ivav'
+'iva{sx}'
+(<-'iva')
+'uvaju{cy}i'
+'uvasmo'
+'uvaste'
+'uvajmo'
+'uvajte'
+'uvaju'
+'uvala'
+'uvale'
+'uvali'
+'uvalo'
+'uvamo'
+'uvana'
+'uvane'
+'uvani'
+'uvano'
+'uvate'
+'uvati'
+'uva{sx}e'
+'uvahu'
+'uvah'
+'uvaj'
+'uvam'
+'uvan'
+'uvao'
+'uvat'
+'uvav'
+'uva{sx}'
+(<-'uva')
+'irujemo'
+'irujete'
+'iruju{cy}i'
+'iraju{cy}i'
+'irivat'
+'irujem'
+'iruje{sx}'
+'irujmo'
+'irujte'
+'irav{sx}i'
+'irasmo'
+'iraste'
+'irati'
+'iramo'
+'irate'
+'iraju'
+'ira{sx}e'
+'irahu'
+'irala'
+'iralo'
+'irali'
+'irale'
+'iruje'
+'iruju'
+'iruj'
+'iral'
+'iran'
+'iram'
+'ira{sx}'
+'irat'
+'irah'
+'irao'
+(<-'ir')
+'a{cx}ismo'
+'a{cx}iste'
+'a{cx}iti'
+'a{cx}imo'
+'a{cx}ite'
+'a{cx}i{sx}e'
+'a{cx}e{cy}i'
+'a{cx}ila'
+'a{cx}ilo'
+'a{cx}ili'
+'a{cx}ile'
+'a{cx}ena'
+'a{cx}eno'
+'a{cx}eni'
+'a{cx}ene'
+'a{cx}io'
+'a{cx}im'
+'a{cx}i{sx}'
+'a{cx}it'
+'a{cx}ih'
+'a{cx}en'
+'a{cx}i'
+'a{cx}e'
+(<-'a{cx}')
+'a{cx}av{sx}i'
+'a{cx}asmo'
+'a{cx}aste'
+'a{cx}ahu'
+'a{cx}ati'
+'a{cx}amo'
+'a{cx}ate'
+'a{cx}a{sx}e'
+'a{cx}ala'
+'a{cx}alo'
+'a{cx}ali'
+'a{cx}ale'
+'a{cx}aju'
+'a{cx}ana'
+'a{cx}ano'
+'a{cx}ani'
+'a{cx}ane'
+'a{cx}ao'
+'a{cx}am'
+'a{cx}a{sx}'
+'a{cx}at'
+'a{cx}ah'
+'a{cx}an'
+(<-'a{cx}a')
+'nuv{sx}i'
+'nusmo'
+'nuste'
+'nu{cy}i'
+'nimo'
+'nite'
+'nemo'
+'nete'
+'nula'
+'nulo'
+'nule'
+'nuli'
+'nuto'
+'nuti'
+'nuta'
+'ne{sx}'
+'nuo'
+'nut'
+(<-'n')
+'niv{sx}i'
+'nismo'
+'niste'
+'niti'
+'nila'
+'nilo'
+'nile'
+'nili'
+'ni{sx}'
+'nio'
+(<-'ni')
+'aju{cy}i'
+'av{sx}i'
+'asmo'
+'ajmo'
+'ajte'
+'ajem'
+'amo'
+'ate'
+'aje'
+'aju'
+'ati'
+'a{sx}e'
+'ahu'
+'ala'
+'ali'
+'ale'
+'alo'
+'ano'
+'at'
+'ah'
+'ao'
+'aj'
+'an'
+'am'
+'a{sx}'
+(<-'a')
+'uraju{cy}i'
+'urasmo'
+'uraste'
+'urajmo'
+'urajte'
+'uramo'
+'urate'
+'uraju'
+'urati'
+'ura{sx}e'
+'urahu'
+'urala'
+'urali'
+'urale'
+'uralo'
+'urana'
+'urano'
+'urani'
+'urane'
+'ural'
+'urat'
+'urah'
+'urao'
+'uraj'
+'uran'
+'uram'
+'ura{sx}'
+(<-'ur')
+'astajasmo'
+'astajaste'
+'astajahu'
+'astajati'
+'astajemo'
+'astajete'
+'astaja{sx}e'
+'astajali'
+'astaju{cy}i'
+'astajala'
+'astajalo'
+'astajale'
+'astajmo'
+'astajao'
+'astajem'
+'astaje{sx}'
+'astajat'
+'astajah'
+'astajte'
+'astaje'
+'astaju'
+(<-'astaj')
+'istajasmo'
+'istajaste'
+'istajahu'
+'istajati'
+'istajemo'
+'istajete'
+'istaja{sx}e'
+'istajali'
+'istaju{cy}i'
+'istajala'
+'istajalo'
+'istajale'
+'istajmo'
+'istajao'
+'istajem'
+'istaje{sx}'
+'istajat'
+'istajah'
+'istajte'
+'istaje'
+'istaju'
+(<-'istaj')
+'ostajasmo'
+'ostajaste'
+'ostajahu'
+'ostajati'
+'ostajemo'
+'ostajete'
+'ostaja{sx}e'
+'ostajali'
+'ostaju{cy}i'
+'ostajala'
+'ostajalo'
+'ostajale'
+'ostajmo'
+'ostajao'
+'ostajem'
+'ostaje{sx}'
+'ostajat'
+'ostajah'
+'ostajte'
+'ostaje'
+'ostaju'
+(<-'ostaj')
+'alama'
+'alima'
+'alom'
+'alu'
+'al'
+(<-'a')
+'ajevima'
+'ajevi'
+'ajeva'
+'ajeve'
+'ajama'
+'ajima'
+'aja'
+'aji'
+(<-'aj')
+'astadosmo'
+'astadoste'
+'astado{sx}e'
+'astanemo'
+'astademo'
+'astanete'
+'astadete'
+'astanimo'
+'astanite'
+'astanila'
+'astav{sx}i'
+'astanem'
+'astadem'
+'astane{sx}'
+'astade{sx}'
+'astadoh'
+'astade'
+'astati'
+'astane'
+'astanu'
+'astadu'
+'astala'
+'astali'
+'astalo'
+'astale'
+'astat'
+'astao'
+(<-'asta')
+'istadosmo'
+'istadoste'
+'istado{sx}e'
+'istanemo'
+'istademo'
+'istanete'
+'istadete'
+'istanimo'
+'istanite'
+'istanila'
+'istav{sx}i'
+'istanem'
+'istadem'
+'istane{sx}'
+'istade{sx}'
+'istadoh'
+'istade'
+'istati'
+'istane'
+'istanu'
+'istadu'
+'istala'
+'istali'
+'istalo'
+'istale'
+'istat'
+'istao'
+(<-'ista')
+'ostadosmo'
+'ostadoste'
+'ostado{sx}e'
+'ostanemo'
+'ostademo'
+'ostanete'
+'ostadete'
+'ostanimo'
+'ostanite'
+'ostanila'
+'ostav{sx}i'
+'ostanem'
+'ostadem'
+'ostane{sx}'
+'ostade{sx}'
+'ostadoh'
+'ostade'
+'ostati'
+'ostane'
+'ostanu'
+'ostadu'
+'ostala'
+'ostali'
+'ostalo'
+'ostale'
+'ostat'
+'ostao'
+(<-'osta')
+'tasmo'
+'taste'
+'tajmo'
+'tajte'
+'tav{sx}i'
+'tati'
+'tamo'
+'tate'
+'taju'
+'tala'
+'talo'
+'tale'
+'tali'
+'tana'
+'tano'
+'tani'
+'tane'
+'tan'
+'taj'
+'tao'
+'tam'
+'ta{sx}'
+'tat'
+'tah'
+(<-'ta')
+'injasmo'
+'injaste'
+'injati'
+'injemo'
+'injete'
+'injali'
+'injala'
+'injalo'
+'injale'
+'inja{sx}e'
+'injahu'
+'injem'
+'inje{sx}'
+'injat'
+'injah'
+'injao'
+(<-'inj')
+'astemo'
+'astete'
+'astimo'
+'astite'
+'astu{cy}i'
+'aste{sx}'
+'asli'
+'asla'
+'aslo'
+'asle'
+(<-'as')
+'iv{sx}i'
+'ie{cy}i'
+'ismo'
+'imo'
+'ite'
+'iti'
+'ili'
+'ila'
+'ilo'
+'ile'
+'im'
+'i{sx}'
+'it'
+'ih'
+'io'
+(<-'i')
+'ijemo'
+'ijete'
+'ijem'
+'ije{sx}'
+'ijmo'
+'ijte'
+'iju'
+'ije'
+'ij'
+'ilu'
+(<-'i')
+'lu{cx}ujete'
+'lu{cx}uju{cy}i'
+'lu{cx}ujemo'
+'lu{cx}ujem'
+'lu{cx}uje{sx}'
+'lu{cx}ismo'
+'lu{cx}iste'
+'lu{cx}ujmo'
+'lu{cx}ujte'
+'lu{cx}uje'
+'lu{cx}uju'
+'lu{cx}i{sx}e'
+'lu{cx}iti'
+'lu{cx}imo'
+'lu{cx}ite'
+'lu{cx}ila'
+'lu{cx}ilo'
+'lu{cx}ili'
+'lu{cx}ile'
+'lu{cx}ena'
+'lu{cx}eno'
+'lu{cx}eni'
+'lu{cx}ene'
+'lu{cx}uj'
+'lu{cx}io'
+'lu{cx}en'
+'lu{cx}im'
+'lu{cx}i{sx}'
+'lu{cx}it'
+'lu{cx}ih'
+'lu{cx}e'
+'lu{cx}i'
+(<-'lu{cx}')
+'jetismo'
+'jetiste'
+'jeti{sx}e'
+'jetimo'
+'jetite'
+'jetiti'
+'jetili'
+'jetila'
+'jetilo'
+'jetile'
+'jetim'
+'jeti{sx}'
+'jetit'
+'jetih'
+'jetio'
+(<-'jeti')
+'emo'
+'em'
+'e{sx}'
+'elama'
+'el'
+(<-'e')
+'ilama'
+'ilima'
+'ilom'
+'il'
+(<-'i')
+'atijega'
+'atijemu'
+'atijima'
+'atijeg'
+'atijem'
+'atega'
+'atemu'
+'ateg'
+'atem'
+'atijih'
+'atijim'
+'atima'
+'atoga'
+'atome'
+'atomu'
+'atiji'
+'atije'
+'atija'
+'atiju'
+'atoj'
+'atog'
+'atom'
+'atim'
+'atih'
+'ata'
+'atu'
+'ato'
+(<-'at')
+'etav{sx}i'
+'etu{cy}i'
+'etemo'
+'etimo'
+'etem'
+'ete{sx}'
+(<-'et')
+'enom'
+'enoj'
+'enog'
+'enim'
+'enih'
+'anoj'
+'anog'
+'anim'
+'anih'
+'eno'
+'oga'
+'ima'
+'enu'
+'ena'
+'ama'
+(<-'')
+'om'
+'og'
+'u'
+'o'
+'i'
+'e'
+'a'
+(<-'')
+'astes'(R2 <-'as')
+'acaju'(R2 <-'a{cx}a')
+'osiji'(R2 <-'o{sx}')
+'esi'(R2 <-'e{sx}')
+'snjeg'(R2 <-'{sx}nj')
+'acila'(R2 <-'a{cx}')
+'etuci'(R2 <-'et')
+'lucujmo'(R2 <-'lu{cx}')
+'luceno'(R2 <-'lu{cx}')
+'avsi'(R2 <-'a')
+'lucujuci'(R2 <-'lu{cx}')
+'jase'(R2 <-'ja{sx}')
+'cinima'(R2 <-'{cx}in')
+'rosit'(R2 <-'ro{sx}i')
+'tasem'(R2 <-'ta{sx}')
+'nasem'(R2 <-'na{sx}')
+'astanes'(R2 <-'asta')
+'avase'(R2 <-'ava')
+'avas'(R2 <-'ava')
+'is'(R2 <-'i')
+'osega'(R2 <-'o{sx}')
+'ucomu'(R2 <-'u{cy}')
+'gasem'(R2 <-'ga{sx}')
+'evase'(R2 <-'eva')
+'lucim'(R2 <-'lu{cx}')
+'gasima'(R2 <-'ga{sx}')
+'astuci'(R2 <-'as')
+'irajuci'(R2 <-'ir')
+'dajima'(R2 <-'{dx}aj')
+'aceno'(R2 <-'a{cx}')
+'snjijem'(R2 <-'{sx}nj')
+'es'(R2 <-'e')
+'osi'(R2 <-'o{sx}')
+'osijem'(R2 <-'o{sx}')
+'ucome'(R2 <-'u{cy}')
+'ecome'(R2 <-'e{cy}')
+'acega'(R2 <-'a{cy}')
+'tasa'(R2 <-'ta{sx}')
+'kasi'(R2 <-'ka{sx}')
+'cinom'(R2 <-'{cx}in')
+'rosis'(R2 <-'ro{sx}i')
+'ecoga'(R2 <-'e{cy}')
+'istanes'(R2 <-'ista')
+'snjijim'(R2 <-'{sx}nj')
+'irujes'(R2 <-'ir')
+'ucih'(R2 <-'u{cy}')
+'rositi'(R2 <-'ro{sx}i')
+'ucog'(R2 <-'u{cy}')
+'luci'(R2 <-'lu{cx}')
+'evas'(R2 <-'eva')
+'acoj'(R2 <-'a{cy}')
+'etavsi'(R2 <-'et')
+'cinih'(R2 <-'{cx}in')
+'acam'(R2 <-'a{cx}a')
+'kasu'(R2 <-'ka{sx}')
+'uceg'(R2 <-'u{cy}')
+'acih'(R2 <-'a{cy}')
+'snjijoj'(R2 <-'{sx}nj')
+'snjije'(R2 <-'{sx}nj')
+'astajase'(R2 <-'astaj')
+'jasi'(R2 <-'ja{sx}')
+'ucima'(R2 <-'u{cy}')
+'rosili'(R2 <-'ro{sx}i')
+'acem'(R2 <-'a{cy}')
+'osemu'(R2 <-'o{sx}')
+'snjiju'(R2 <-'{sx}nj')
+'acom'(R2 <-'a{cy}')
+'acena'(R2 <-'a{cx}')
+'lucuj'(R2 <-'lu{cx}')
+'ostadose'(R2 <-'osta')
+'acan'(R2 <-'a{cx}a')
+'acane'(R2 <-'a{cx}a')
+'injase'(R2 <-'inj')
+'snjoga'(R2 <-'{sx}nj')
+'jasima'(R2 <-'ja{sx}')
+'ivas'(R2 <-'iva')
+'istajase'(R2 <-'istaj')
+'snjoj'(R2 <-'{sx}nj')
+'lucile'(R2 <-'lu{cx}')
+'lucujes'(R2 <-'lu{cx}')
+'lucismo'(R2 <-'lu{cx}')
+'gasi'(R2 <-'ga{sx}')
+'lucujte'(R2 <-'lu{cx}')
+'rosise'(R2 <-'ro{sx}i')
+'acimo'(R2 <-'a{cx}')
+'acen'(R2 <-'a{cx}')
+'tasima'(R2 <-'ta{sx}')
+'ecemu'(R2 <-'e{cy}')
+'cini'(R2 <-'{cx}in')
+'rosite'(R2 <-'ro{sx}i')
+'lucio'(R2 <-'lu{cx}')
+'snem'(R2 <-'{sx}n')
+'lucih'(R2 <-'lu{cx}')
+'aciste'(R2 <-'a{cx}')
+'nuci'(R2 <-'n')
+'injes'(R2 <-'inj')
+'acate'(R2 <-'a{cx}a')
+'rosilo'(R2 <-'ro{sx}i')
+'osije'(R2 <-'o{sx}')
+'esem'(R2 <-'e{sx}')
+'acao'(R2 <-'a{cx}a')
+'astajes'(R2 <-'astaj')
+'rosimo'(R2 <-'ro{sx}i')
+'ecih'(R2 <-'e{cy}')
+'evajuci'(R2 <-'eva')
+'nis'(R2 <-'ni')
+'acog'(R2 <-'a{cy}')
+'acile'(R2 <-'a{cx}')
+'ivajuci'(R2 <-'iva')
+'jasa'(R2 <-'ja{sx}')
+'acome'(R2 <-'a{cy}')
+'nasi'(R2 <-'na{sx}')
+'ucoj'(R2 <-'u{cy}')
+'vasom'(R2 <-'va{sx}')
+'iravsi'(R2 <-'ir')
+'istajuci'(R2 <-'istaj')
+'dajama'(R2 <-'{dx}aj')
+'cinu'(R2 <-'{cx}in')
+'dajevi'(R2 <-'{dx}aj')
+'vasi'(R2 <-'va{sx}')
+'kasom'(R2 <-'ka{sx}')
+'tase'(R2 <-'ta{sx}')
+'acali'(R2 <-'a{cx}a')
+'avajuci'(R2 <-'ava')
+'rosio'(R2 <-'ro{sx}i')
+'aci'(R2 <-'a{cx}')
+'lucujem'(R2 <-'lu{cx}')
+'osem'(R2 <-'o{sx}')
+'kase'(R2 <-'ka{sx}')
+'ucoga'(R2 <-'u{cy}')
+'lucite'(R2 <-'lu{cx}')
+'tasom'(R2 <-'ta{sx}')
+'as'(R2 <-'a')
+'lucen'(R2 <-'lu{cx}')
+'luce'(R2 <-'lu{cx}')
+'osih'(R2 <-'o{sx}')
+'snja'(R2 <-'{sx}nj')
+'tasu'(R2 <-'ta{sx}')
+'lucujete'(R2 <-'lu{cx}')
+'nes'(R2 <-'n')
+'cine'(R2 <-'{cx}in')
+'luciste'(R2 <-'lu{cx}')
+'basama'(R2 <-'ba{sx}')
+'osijemu'(R2 <-'o{sx}')
+'snjog'(R2 <-'{sx}nj')
+'rosismo'(R2 <-'ro{sx}i')
+'snjome'(R2 <-'{sx}nj')
+'gasu'(R2 <-'ga{sx}')
+'luceni'(R2 <-'lu{cx}')
+'acomu'(R2 <-'a{cy}')
+'snjiji'(R2 <-'{sx}nj')
+'snjijemu'(R2 <-'{sx}nj')
+'uca'(R2 <-'u{cy}')
+'snjijih'(R2 <-'{sx}nj')
+'lucise'(R2 <-'lu{cx}')
+'acit'(R2 <-'a{cx}')
+'ecima'(R2 <-'e{cy}')
+'snjo'(R2 <-'{sx}nj')
+'acismo'(R2 <-'a{cx}')
+'snjega'(R2 <-'{sx}nj')
+'acene'(R2 <-'a{cx}')
+'uvase'(R2 <-'uva')
+'lucila'(R2 <-'lu{cx}')
+'basi'(R2 <-'ba{sx}')
+'acani'(R2 <-'a{cx}a')
+'basom'(R2 <-'ba{sx}')
+'kasama'(R2 <-'ka{sx}')
+'urajuci'(R2 <-'ur')
+'acavsi'(R2 <-'a{cx}a')
+'acite'(R2 <-'a{cx}')
+'cinim'(R2 <-'{cx}in')
+'snjijeg'(R2 <-'{sx}nj')
+'lucis'(R2 <-'lu{cx}')
+'daji'(R2 <-'{dx}aj')
+'acoga'(R2 <-'a{cy}')
+'ostajes'(R2 <-'ostaj')
+'ijes'(R2 <-'i')
+'eca'(R2 <-'e{cy}')
+'gase'(R2 <-'ga{sx}')
+'eceg'(R2 <-'e{cy}')
+'osijim'(R2 <-'o{sx}')
+'acis'(R2 <-'a{cx}')
+'ucom'(R2 <-'u{cy}')
+'lucimo'(R2 <-'lu{cx}')
+'osa'(R2 <-'o{sx}')
+'jasem'(R2 <-'ja{sx}')
+'lucilo'(R2 <-'lu{cx}')
+'osijih'(R2 <-'o{sx}')
+'vasu'(R2 <-'va{sx}')
+'rosivsi'(R2 <-'ro{sx}i')
+'acas'(R2 <-'a{cx}a')
+'acili'(R2 <-'a{cx}')
+'lucit'(R2 <-'lu{cx}')
+'snje'(R2 <-'{sx}nj')
+'ecoj'(R2 <-'e{cy}')
+'ujuci'(R2 <-'uj')
+'osijega'(R2 <-'o{sx}')
+'kasima'(R2 <-'ka{sx}')
+'astadose'(R2 <-'asta')
+'base'(R2 <-'ba{sx}')
+'ostanes'(R2 <-'osta')
+'ujes'(R2 <-'uj')
+'snju'(R2 <-'{sx}nj')
+'nasama'(R2 <-'na{sx}')
+'ecem'(R2 <-'e{cy}')
+'nasu'(R2 <-'na{sx}')
+'isama'(R2 <-'i{sx}')
+'dajevima'(R2 <-'{dx}aj')
+'sneg'(R2 <-'{sx}n')
+'osoga'(R2 <-'o{sx}')
+'acat'(R2 <-'a{cx}a')
+'nase'(R2 <-'na{sx}')
+'lucuje'(R2 <-'lu{cx}')
+'kasem'(R2 <-'ka{sx}')
+'ucega'(R2 <-'u{cy}')
+'uce'(R2 <-'u{cy}')
+'ecim'(R2 <-'e{cy}')
+'tavsi'(R2 <-'ta')
+'basem'(R2 <-'ba{sx}')
+'osom'(R2 <-'o{sx}')
+'ace'(R2 <-'a{cy}')
+'jetis'(R2 <-'jeti')
+'kasa'(R2 <-'ka{sx}')
+'aceci'(R2 <-'a{cx}')
+'acati'(R2 <-'a{cx}a')
+'tasi'(R2 <-'ta{sx}')
+'aceni'(R2 <-'a{cx}')
+'ecuh'(R2 <-'e{cy}')
+'snega'(R2 <-'{sx}n')
+'lucene'(R2 <-'lu{cx}')
+'ivase'(R2 <-'iva')
+'osim'(R2 <-'o{sx}')
+'ecega'(R2 <-'e{cy}')
+'cino'(R2 <-'{cx}in')
+'basu'(R2 <-'ba{sx}')
+'snjima'(R2 <-'{sx}nj')
+'ece'(R2 <-'e{cy}')
+'acale'(R2 <-'a{cx}a')
+'esama'(R2 <-'e{sx}')
+'snjem'(R2 <-'{sx}nj')
+'vase'(R2 <-'va{sx}')
+'istadose'(R2 <-'ista')
+'ostavsi'(R2 <-'osta')
+'cina'(R2 <-'{cx}in')
+'acasmo'(R2 <-'a{cx}a')
+'cinog'(R2 <-'{cx}in')
+'ostades'(R2 <-'osta')
+'osiju'(R2 <-'o{sx}')
+'dajeve'(R2 <-'{dx}aj')
+'snjomu'(R2 <-'{sx}nj')
+'etes'(R2 <-'et')
+'snjim'(R2 <-'{sx}nj')
+'daje'(R2 <-'{dx}aj')
+'acio'(R2 <-'a{cx}')
+'osoj'(R2 <-'o{sx}')
+'osijoj'(R2 <-'o{sx}')
+'isem'(R2 <-'i{sx}')
+'ecom'(R2 <-'e{cy}')
+'gasa'(R2 <-'ga{sx}')
+'rosila'(R2 <-'ro{sx}i')
+'tas'(R2 <-'ta')
+'lucujemo'(R2 <-'lu{cx}')
+'snjijima'(R2 <-'{sx}nj')
+'daju'(R2 <-'{dx}aj')
+'istavsi'(R2 <-'ista')
+'astades'(R2 <-'asta')
+'aciti'(R2 <-'a{cx}')
+'osomu'(R2 <-'o{sx}')
+'acise'(R2 <-'a{cx}')
+'astajuci'(R2 <-'astaj')
+'oseg'(R2 <-'o{sx}')
+'acemu'(R2 <-'a{cy}')
+'rosim'(R2 <-'ro{sx}i')
+'osijima'(R2 <-'o{sx}')
+'acahu'(R2 <-'a{cx}a')
+'cinome'(R2 <-'{cx}in')
+'jasama'(R2 <-'ja{sx}')
+'iras'(R2 <-'ir')
+'basima'(R2 <-'ba{sx}')
+'aceg'(R2 <-'a{cy}')
+'ostajuci'(R2 <-'ostaj')
+'osu'(R2 <-'o{sx}')
+'ecomu'(R2 <-'e{cy}')
+'basa'(R2 <-'ba{sx}')
+'vasem'(R2 <-'va{sx}')
+'osima'(R2 <-'o{sx}')
+'acilo'(R2 <-'a{cx}')
+'dajem'(R2 <-'{dx}aj')
+'snji'(R2 <-'{sx}nj')
+'ucem'(R2 <-'u{cy}')
+'gasama'(R2 <-'ga{sx}')
+'ose'(R2 <-'o{sx}')
+'gasom'(R2 <-'ga{sx}')
+'snjom'(R2 <-'{sx}nj')
+'cinama'(R2 <-'{cx}in')
+'acah'(R2 <-'a{cx}a')
+'rosih'(R2 <-'ro{sx}i')
+'tasama'(R2 <-'ta{sx}')
+'istades'(R2 <-'ista')
+'nasom'(R2 <-'na{sx}')
+'snjijega'(R2 <-'{sx}nj')
+'ovase'(R2 <-'ova')
+'acase'(R2 <-'a{cx}a')
+'nasa'(R2 <-'na{sx}')
+'acuh'(R2 <-'a{cy}')
+'cinomu'(R2 <-'{cx}in')
+'ivsi'(R2 <-'i')
+'acim'(R2 <-'a{cy}')
+'ecog'(R2 <-'e{cy}')
+'osome'(R2 <-'o{sx}')
+'nasima'(R2 <-'na{sx}')
+'ostajase'(R2 <-'ostaj')
+'jetise'(R2 <-'jeti')
+'luciti'(R2 <-'lu{cx}')
+'snemu'(R2 <-'{sx}n')
+'lucena'(R2 <-'lu{cx}')
+'vasama'(R2 <-'va{sx}')
+'ajuci'(R2 <-'a')
+'aca'(R2 <-'a{cy}')
+'rosiste'(R2 <-'ro{sx}i')
+'ucim'(R2 <-'u{cy}')
+'acima'(R2 <-'a{cy}')
+'isi'(R2 <-'i{sx}')
+'acano'(R2 <-'a{cx}a')
+'istajes'(R2 <-'istaj')
+'vasima'(R2 <-'va{sx}')
+'osog'(R2 <-'o{sx}')
+'irujuci'(R2 <-'ir')
+'jasom'(R2 <-'ja{sx}')
+'acamo'(R2 <-'a{cx}a')
+'cinoga'(R2 <-'{cx}in')
+'cinoj'(R2 <-'{cx}in')
+'snjija'(R2 <-'{sx}nj')
+'acaste'(R2 <-'a{cx}a')
+'vasa'(R2 <-'va{sx}')
+'acala'(R2 <-'a{cx}a')
+'ucemu'(R2 <-'u{cy}')
+'osijeg'(R2 <-'o{sx}')
+'uvas'(R2 <-'uva')
+'nivsi'(R2 <-'ni')
+'jasu'(R2 <-'ja{sx}')
+'lucili'(R2 <-'lu{cx}')
+'nuvsi'(R2 <-'n')
+'ucuh'(R2 <-'u{cy}')
+'lucuju'(R2 <-'lu{cx}')
+'snjemu'(R2 <-'{sx}nj')
+'acalo'(R2 <-'a{cx}a')
+'ase'(R2 <-'a')
+'dajeva'(R2 <-'{dx}aj')
+'daja'(R2 <-'{dx}aj')
+'rosile'(R2 <-'ro{sx}i')
+'osija'(R2 <-'o{sx}')
+'irase'(R2 <-'ir')
+'urase'(R2 <-'ur')
+'istem'(R2 <-'i{sx}t')
+'uvajuci'(R2 <-'uva')
+'snjih'(R2 <-'{sx}nj')
+'astavsi'(R2 <-'asta')
+'uras'(R2 <-'ur')
+'acana'(R2 <-'a{cx}a')
+'ieci'(R2 <-'i')
+
+		)
+	)
+)
+
+define stem as (
+   do prelude
+    do mark_regions
+	backwards (
+        do Step_1
+		do Step_3
+	)
+)
